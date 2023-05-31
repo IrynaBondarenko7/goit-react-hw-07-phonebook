@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import {
   StyledContactList,
   StyledContactsItem,
@@ -7,12 +8,17 @@ import {
 } from './ContactList.styled';
 import { MdClose } from 'react-icons/md';
 import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
+import { fetchContacts } from 'redux/operations';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const normalizedFilter = filter.toLowerCase();
   const filtredContacts = contacts.filter(
@@ -20,9 +26,7 @@ export const ContactList = () => {
       contact.name && contact.name.toLowerCase().includes(normalizedFilter)
   );
 
-  const deleteContactfromList = id => {
-    dispatch(deleteContact(id));
-  };
+  const handleDelete = id => dispatch(deleteContact(id));
 
   return (
     <StyledContactList>
@@ -31,9 +35,9 @@ export const ContactList = () => {
           <StyledContactsItem key={contact.id}>
             <p>
               {contact.name}
-              <StyledNumber>{contact.number}</StyledNumber>
+              <StyledNumber>{contact.phone}</StyledNumber>
             </p>
-            <StyledDeleteBtn onClick={() => deleteContactfromList(contact.id)}>
+            <StyledDeleteBtn onClick={() => handleDelete(contact.id)}>
               <MdClose />
             </StyledDeleteBtn>
           </StyledContactsItem>

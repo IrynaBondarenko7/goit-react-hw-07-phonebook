@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { ContactList } from './Contacts/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
@@ -10,8 +11,11 @@ import {
 } from './App.styled';
 import { FaBook } from 'react-icons/fa';
 import { IoMdContacts } from 'react-icons/io';
+import { getError, getIsLoading } from 'redux/selectors';
 
 export const App = () => {
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
   return (
     <StyledLayout>
       <StyledPhonebookWrap>
@@ -27,6 +31,7 @@ export const App = () => {
         </StyledTitleWrap>
 
         <Filter />
+        {isLoading && !error && <b>Request in progress...</b>}
         <ContactList />
       </StyledPhonebookWrap>
     </StyledLayout>

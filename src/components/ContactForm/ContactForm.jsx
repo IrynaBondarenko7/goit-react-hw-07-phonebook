@@ -12,8 +12,8 @@ import {
   StyledNumberTextWrap,
   StyledTextWrap,
 } from './ContactForm.styled';
-import { addContact } from 'redux/contactsSlice';
 import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
 
 const ContactsSchema = Yup.object().shape({
   name: Yup.string()
@@ -22,36 +22,30 @@ const ContactsSchema = Yup.object().shape({
       'Invalid name'
     )
     .required(),
-  number: Yup.number().required(),
+  phone: Yup.string().required(),
 });
 
 export const ContactForm = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  const addContactToList = value => {
-    dispatch(addContact(value));
-  };
-
   return (
     <Formik
       initialValues={{
         name: '',
-        number: '',
+        phone: '',
       }}
       validationSchema={ContactsSchema}
       onSubmit={(values, { resetForm }) => {
         const contactsArray = contacts.filter(
           contact => contact.name === values.name
         );
-
         if (contactsArray.length !== 0) {
           alert(`${values.name} is alredy in contacts`);
           return;
         }
-
-        addContactToList(values);
-        resetForm({ values: { name: '', number: '' } });
+        dispatch(addContact(values));
+        resetForm({ values: { name: '', phone: '' } });
       }}
     >
       <Form>
@@ -71,7 +65,7 @@ export const ContactForm = () => {
 
             <Field
               type="tel"
-              name="number"
+              name="phone"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />

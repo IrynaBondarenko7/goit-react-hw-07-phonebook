@@ -2,14 +2,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import {
   StyledContactList,
+  StyledContactText,
   StyledContactsItem,
   StyledDeleteBtn,
   StyledNumber,
 } from './ContactList.styled';
 import { MdClose } from 'react-icons/md';
 import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
-import { fetchContacts } from 'redux/operations';
+import { deleteContact, fetchContacts } from 'redux/operations';
+import { GiSmartphone } from 'react-icons/gi';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
@@ -33,10 +34,13 @@ export const ContactList = () => {
       {filtredContacts.map(contact => {
         return (
           <StyledContactsItem key={contact.id}>
-            <p>
+            <StyledContactText>
               {contact.name}
-              <StyledNumber>{contact.phone}</StyledNumber>
-            </p>
+              <StyledNumber>
+                <GiSmartphone />
+                {contact.phone}
+              </StyledNumber>
+            </StyledContactText>
             <StyledDeleteBtn onClick={() => handleDelete(contact.id)}>
               <MdClose />
             </StyledDeleteBtn>

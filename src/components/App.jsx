@@ -3,6 +3,7 @@ import { ContactList } from './Contacts/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { StyledLayout } from './Layout/Layout.styled';
+
 import {
   StyledPhonebookWrap,
   StyledContactsTitle,
@@ -16,6 +17,7 @@ import { getError, getIsLoading } from 'redux/selectors';
 export const App = () => {
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
+
   return (
     <StyledLayout>
       <StyledPhonebookWrap>

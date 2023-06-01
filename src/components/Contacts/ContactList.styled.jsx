@@ -27,4 +27,11 @@ export const StyledDeleteBtn = styled.button`
 `;
 export const StyledNumber = styled.span`
   margin-left: 10px;
+  svg {
+    margin-right: 5px;
+  }
+`;
+export const StyledContactText = styled.p`
+  display: flex;
+  align-items: baseline;
 `;

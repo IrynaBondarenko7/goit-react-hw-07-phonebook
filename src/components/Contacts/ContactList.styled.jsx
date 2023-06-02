@@ -7,7 +7,7 @@ export const StyledContactList = styled.ul`
 `;
 export const StyledContactsItem = styled.li`
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   align-items: center;
   border: 1px solid #196f3d;
   border-radius: 5px;
@@ -25,13 +25,12 @@ export const StyledDeleteBtn = styled.button`
     height: 25px;
   }
 `;
-export const StyledNumber = styled.span`
-  margin-left: 10px;
+export const StyledNumber = styled.p`
+  flex: 1 1 0%;
   svg {
     margin-right: 5px;
   }
 `;
 export const StyledContactText = styled.p`
-  display: flex;
-  align-items: baseline;
+  flex: 1 1 0%;
 `;

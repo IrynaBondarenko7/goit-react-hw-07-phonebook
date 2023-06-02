@@ -12,11 +12,12 @@ import {
 } from './App.styled';
 import { FaBook } from 'react-icons/fa';
 import { IoMdContacts } from 'react-icons/io';
-import { getError, getIsLoading } from 'redux/selectors';
+import { selectError, selectIsLoading } from 'redux/selectors';
+import { Loader } from './Loader/Loader';
 
 export const App = () => {
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   return (
     <StyledLayout>
@@ -33,7 +34,8 @@ export const App = () => {
         </StyledTitleWrap>
 
         <Filter />
-        {isLoading && !error && <b>Request in progress...</b>}
+        {isLoading && !error && <Loader />}
+        {error && <p>Something went wrong, try again!</p>}
         <ContactList />
       </StyledPhonebookWrap>
     </StyledLayout>

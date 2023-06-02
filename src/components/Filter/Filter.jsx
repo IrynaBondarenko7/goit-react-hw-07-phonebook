@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from 'redux/selectors';
+import { selectFilter } from 'redux/selectors';
 import {
   StyledFilterTextWrap,
   StyledFiltrWrap,
@@ -9,7 +9,7 @@ import { MdPersonSearch } from 'react-icons/md';
 import { setFilter } from 'redux/filtersSlice';
 
 export const Filter = () => {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const changeFilter = evt => {

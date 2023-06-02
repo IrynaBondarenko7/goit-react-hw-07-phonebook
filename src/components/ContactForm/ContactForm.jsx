@@ -2,6 +2,7 @@ import { Formik, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { FcPlus } from 'react-icons/fc';
+import toast, { Toaster } from 'react-hot-toast';
 
 import {
   ErrorMessage,
@@ -12,7 +13,7 @@ import {
   StyledNumberTextWrap,
   StyledTextWrap,
 } from './ContactForm.styled';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/operations';
 
 const ContactsSchema = Yup.object().shape({
@@ -26,8 +27,15 @@ const ContactsSchema = Yup.object().shape({
 });
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
+
+  const checkContact = values => {
+    const contactsArray = contacts.filter(
+      contact => contact.name === values.name
+    );
+    return contactsArray.length !== 0;
+  };
 
   return (
     <Formik
@@ -37,11 +45,8 @@ export const ContactForm = () => {
       }}
       validationSchema={ContactsSchema}
       onSubmit={(values, { resetForm }) => {
-        const contactsArray = contacts.filter(
-          contact => contact.name === values.name
-        );
-        if (contactsArray.length !== 0) {
-          alert(`${values.name} is alredy in contacts`);
+        if (checkContact(values)) {
+          toast.error(`${values.name} is alredy in contacts`);
           return;
         }
         dispatch(addContact(values));
@@ -50,6 +55,7 @@ export const ContactForm = () => {
     >
       <Form>
         <StyledLabelWrap>
+          <Toaster />
           <label htmlFor="">
             <StyledTextWrap>Name</StyledTextWrap>
 
